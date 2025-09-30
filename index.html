@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christina Cappelli - Portfolio</title>
+    
+    <!-- Favicon -->
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"> -->
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Culture Push Portfolio</h1>
+            <h2>Christina Cappelli</h2>
+
+            <div class="divider"></div>
+        </header>
+
+        <!-- Grid Layout -->
+        <main class="grid-container">
+            <!-- Project 1 - Large featured project -->
+            <div class="project-item featured">
+                <div class="project-media">
+                    <img src="images/tr.jpg" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h2>01</h2>
+                    <h3>Transference</h3>
+                    <p>Photograph selected from the Transference Series: Mexico that traces how traditional practices of coloration, fermentation, and material interaction embody collective memory and the passing of land-based knowledge from expert to novice. Research and Documentation were archived in San José Deguedo, Mexico with Raul Ponton.  </p>
+
+
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-item">
+                <div class="project-media">
+                    <video controls>
+                        <source src="videos/liminallens.mp4" type="video/mp4"  alt="Project 2">>
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h2>02</h2>
+                    <h3>Liminal Lens</h3>
+                    <p>An interactive installation that visualizes the collective movements of Volvox algae to reveal the hidden rhythms of microscopic life. Translating microscopic movements into immersive visuals, it invites viewers to reflect on scale, perception, and our entanglement with microscopic life. Computational Video created in openFrameworks ( c++ ).</p>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-item">
+                <div class="project-media">
+                    <img src="images/pk.jpg" alt="Project 3">
+                </div>
+                <div class="project-info">
+                    <h2>03</h2>
+                    <h3>Proxima Kòsmos</h3>
+                    <p>image select from the Proxima Kósmos series created with The Berggruen Institute. This is an internal render of a speculative terrain, shaped through the research of planetary scientists and astrobiologists at institutions such as MIT Media Lab, NASA, and ASU. I created the renders using generative design, adobe create suite and components tested in Blender. </p>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-item">
+                <div class="project-media">
+                    <img src="images/bb1.jpg" alt="Project 4">
+                </div>
+                <div class="project-info">
+                    <h2>04</h2>
+                    <h3>Biome Boba</h3>
+                    <p>Image still from a speculative synthetic biology project. Inspired by extremophiles, this research explores microbial adaptation in extreme environments and investigates how microbial ecosystems from specific body biomes could be leveraged for novel therapeutic applications—such as integrating personalized living cultures into boba—reimagining the future of personalized wellness. Conducted at Genspace as part of MIT’s How to Grow Almost Anything course.</p>                </div>
+            </div>
+
+
+            <!-- Project 5 -->
+            <div class="project-item">
+                <div class="project-media">
+                    <video controls>
+                        <source src="videos/thevoid.mp4" type="video/mp4" alt="Project 5">>
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h2>05</h2>
+                    <h3>The Void</h3>
+                    <p>An interactive exploration of digital identity exposing a feedback loop where identity is shaped by the systems mediating it. Computational Video created in openFrameworks ( c++ ).</p>
+                </div>
+            </div>
+            </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="divider"></div>
+            <p>© 2025 Thank you for viewing!</p>
+        </footer>
+    </div>
+
+    <!-- Modal for expanded view -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modal-img" class="modal-media" style="display: none;">
+            <video id="modal-video" class="modal-media" controls style="display: none;">
+                <source id="modal-video-source" src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalVideo = document.getElementById('modal-video');
+        const modalVideoSource = document.getElementById('modal-video-source');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        // Add click event to all images and videos
+        document.querySelectorAll('.project-media img, .project-media video').forEach(media => {
+            media.style.cursor = 'pointer';
+            media.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Pause all videos first
+                document.querySelectorAll('.project-media video').forEach(video => {
+                    video.pause();
+                });
+                
+                modal.style.display = 'block';
+                
+                if (this.tagName === 'IMG') {
+                    modalImg.src = this.src;
+                    modalImg.alt = this.alt;
+                    modalImg.style.display = 'block';
+                    modalVideo.style.display = 'none';
+                } else if (this.tagName === 'VIDEO') {
+                    // Ensure the clicked video is paused
+                    this.pause();
+                    modalVideoSource.src = this.querySelector('source').src;
+                    modalVideo.load();
+                    modalVideo.style.display = 'block';
+                    modalImg.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modal when clicking the X
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modalVideo.pause();
+            // Ensure all project videos are also paused
+            document.querySelectorAll('.project-media video').forEach(video => {
+                video.pause();
+            });
+        });
+
+        // Close modal when clicking outside the content
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                modalVideo.pause();
+                // Ensure all project videos are also paused
+                document.querySelectorAll('.project-media video').forEach(video => {
+                    video.pause();
+                });
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+                modalVideo.pause();
+                // Ensure all project videos are also paused
+                document.querySelectorAll('.project-media video').forEach(video => {
+                    video.pause();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
